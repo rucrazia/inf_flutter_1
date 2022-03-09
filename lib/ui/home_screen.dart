@@ -2,14 +2,14 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:inf_project1/data/api.dart';
+import 'package:inf_project1/data/photo_provider.dart';
 import 'package:inf_project1/model/photo.dart';
 import 'package:inf_project1/ui/widget/photo_widget.dart';
 import 'package:http/http.dart' as http;
 
 class HomeScreen extends StatefulWidget {
-  final PixabayApi api;
 
-  const HomeScreen({Key? key, required this.api}) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -31,6 +31,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final photoProvider = PhotoProvider.of(context);
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -53,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   suffixIcon: IconButton(
                       onPressed: () async {
-                        final photos = await widget.api.fetch(_constroller.text);
+                        final photos = await photoProvider.api.fetch(_constroller.text);
                         setState(() {
                           _photos = photos;
                         });
