@@ -1,11 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:inf_project1/data/api.dart';
 import 'package:inf_project1/data/photo_provider.dart';
 import 'package:inf_project1/model/photo.dart';
 import 'package:inf_project1/ui/widget/photo_widget.dart';
-import 'package:http/http.dart' as http;
 
 class HomeScreen extends StatefulWidget {
 
