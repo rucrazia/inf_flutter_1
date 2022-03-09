@@ -53,29 +53,37 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   suffixIcon: IconButton(
                       onPressed: () async {
-                        final photos = await photoProvider.api.fetch(_constroller.text);
-                        setState(() {
-                          _photos = photos;
-                        });
+                        photoProvider.fetch(_constroller.text);
                       },
                       icon: const Icon(Icons.search))),
             ),
           ),
-          Expanded(
-            child: GridView.builder(
-                padding: EdgeInsets.all(16.0),
-                itemCount: 10,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 16,
-                  mainAxisSpacing: 16,
-                ),
-                itemBuilder: (context, index) {
-                  final photo = _photos[index];
-                  return PhotoWidget(
-                    photo: photo,
-                  );
-                }),
+          StreamBuilder<List<Photo>>(
+            stream: photoProvider.photoStream,
+            builder: (context, snapshot) {
+              //데이터가 스냅샵을 통해서 들어온다.
+              if (!snapshot.hasData){
+                return const CircularProgressIndicator();
+              }
+              final photos = snapshot.data!;
+
+              return Expanded(
+                child: GridView.builder(
+                    padding: EdgeInsets.all(16.0),
+                    itemCount: photos.length,
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 16,
+                      mainAxisSpacing: 16,
+                    ),
+                    itemBuilder: (context, index) {
+                      final photo = photos[index];
+                      return PhotoWidget(
+                        photo: photo,
+                      );
+                    }),
+              );
+            }
           )
         ],
       ),
