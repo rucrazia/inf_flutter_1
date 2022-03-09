@@ -17,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final _constroller = TextEditingController();
 
-  List<Photo> _photos = [];
+  List<Photo> _photos = []; // 데이터 담는 부분. ui에 있으면 안되는데 차후 수정 예정
 
 
 
